@@ -2,9 +2,9 @@ FROM node:12.2
 
 ENV HOME=/home/app
 
-# Ensure apt-get is non-interactive, update package lists, and install htop
+# Ensure apt-get is non-interactive, update package lists, install dependencies, and clean up
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends apt-utils && \
+    apt-get install -y --no-install-recommends apt-utils apt-transport-https && \
     apt-get install -y htop && \
     rm -rf /var/lib/apt/lists/*
 
