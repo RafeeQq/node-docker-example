@@ -1,12 +1,8 @@
-FROM node:12.2
+FROM node:18.18
 
 ENV HOME=/home/app
 
-# Ensure apt-get is non-interactive, update package lists, install dependencies, and clean up
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends apt-utils apt-transport-https && \
-    apt-get install -y htop && \
-    rm -rf /var/lib/apt/lists/*
+RUN npm install
 
 # Copy package.json and package-lock.json
 COPY package.json package-lock.json $HOME/node_docker/
@@ -16,6 +12,8 @@ WORKDIR $HOME/node_docker
 
 # Install dependencies
 RUN npm install --silent --progress=false
+
+RUN npm run build
 
 # Copy the rest of the application code
 COPY . $HOME/node_docker
